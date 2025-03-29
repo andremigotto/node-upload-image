@@ -1,3 +1,5 @@
+import { uploadImage } from '@/app/functions/upload-image'
+import { isRight, unwrapEither } from '@/shared/either'
 import type { FastifyPluginAsync } from 'fastify'
 import { z } from 'zod'
 
@@ -9,13 +11,12 @@ export const uploadImageRoute: FastifyPluginAsync = async server => {
         summary: 'Upload an image',
         consumes: ['multipart/form-data'],
         response: {
-          201: z.object({ uploadId: z.string() }),
-          400: z
-            .object({ message: z.string() })
-            .describe('Upload already exists.'),
+          201: z.null().describe('Image uploaded.'),
+          400: z.object({ message: z.string() }),
         },
       },
     },
+
     async (request, reply) => {
       const uploadedFile = await request.file({
         limits: {
@@ -23,7 +24,26 @@ export const uploadImageRoute: FastifyPluginAsync = async server => {
         },
       })
 
-      console.log(uploadedFile)
+      if (!uploadedFile?.filename) {
+        return reply.status(400).send({ message: 'File name is require.' })
+      }
+
+      const result = await uploadImage({
+        fileName: uploadedFile.filename,
+        contentType: uploadedFile.type,
+        contentStream: uploadedFile.file,
+      })
+
+      if (isRight(result)) {
+        return reply.status(201).send()
+      }
+
+      const error = unwrapEither(result)
+
+      switch (error.constructor.name) {
+        case 'InvalidFileFormat':
+          return reply.status(400).send({ message: error.message })
+      }
     }
   )
 }
