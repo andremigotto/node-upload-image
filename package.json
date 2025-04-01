@@ -14,7 +14,6 @@
     "db:migrate:test": "dotenv -e .env.test -- drizzle-kit migrate",
     "pretest": "pnpm run db:migrate:test",
     "pretest:watch": "pnpm run db:migrate:test"
-
   },
   "keywords": [],
   "author": "",
@@ -27,6 +26,7 @@
     "@fastify/multipart": "^9.0.3",
     "@fastify/swagger": "^9.4.2",
     "@fastify/swagger-ui": "^5.2.2",
+    "dayjs": "^1.11.13",
     "drizzle-orm": "^0.41.0",
     "fastify": "^5.2.2",
     "fastify-type-provider-zod": "^4.0.2",
@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
+    "@faker-js/faker": "^9.6.0",
     "@types/node": "^22.13.14",
     "dotenv-cli": "^8.0.0",
     "drizzle-kit": "^0.30.6",
