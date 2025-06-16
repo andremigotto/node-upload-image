@@ -40,4 +40,5 @@ jobs:
           IMAGE_TAG: ${{ steps.generate-tag.outputs.sha }}
         run: |
             docker build -t $ECR_REGISTRY:$IMAGE_TAG .
+            docker tag widget-server:$IMAGE_TAG $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
             docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
