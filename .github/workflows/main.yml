@@ -22,9 +22,9 @@ jobs:
 
       - name: Install PNPM
         id: install-pnpm
-        uses: pnpm/actions-setup@v4
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10
 
       - name: Configure AWS Credentials
         id: configure-aws-credentials
