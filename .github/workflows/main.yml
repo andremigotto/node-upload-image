@@ -74,7 +74,7 @@ jobs:
 
       - name: Build and push the image to DockerHub
         id: build-push-image
-        uses: docker/docker-push-action@v6
+        uses: docker/build-push-action@v6
         with:
           context: .
           push: true
